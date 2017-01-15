@@ -1,5 +1,11 @@
 import math
-
+'''
+Quelques definitions vois-a-vis de ce projet:
+- Voisins :   pour chacune des cases du plateau du jeu, liste des cases accessibles depuis cette case (liste de listes)
+- Bordure :   liste des cases accessibles d'une case (nimporte laquelle -> utilise pour calculer les distances
+- Distances : pour chacune des cases (liste), distance a parcourrir (nombre de cases) pour atteindre cette case depuis la case d'origine
+- Mur :       A cheval sur 4 cases - hautGauche|hautDroit|basGauche|basDroit - soit horizontal, soit vertical -> modifie les voisins de facon a rendre le passage entre certaines cases inaccessible  
+'''
 def calculerTableauDesDistances(voisins,origine):
     distances = [-1]*len(voisins)
     distances[origine] = 0
@@ -138,12 +144,12 @@ def dessinnerMurOuPassageVertical(position,case,lenLigne):
         return '-'
     else : return 'M'
 
-def lePlusCourtChemin(position,voisins,casesArrivee,distances):
+def lePlusCourtChemin(positionActuelle,voisins,casesArrivee,distances):
     chemin = []
     positionChemin = indiceDistanceMinimaleVersDestination(distances,casesArrivee)
     if(positionChemin != -1):
         chemin.append(positionChemin)
-        while(positionChemin != position):
+        while(positionChemin != positionActuelle):
             positionChemin = indiceDistanceMinimaleVersDestination(distances,voisins[positionChemin])
             chemin.append(positionChemin)
     return chemin[::-1]
