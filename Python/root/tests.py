@@ -1,6 +1,6 @@
 from quoridor import *
 
-nbTotalTests = 15
+nbTotalTests = 13
 cptTests = 0
 cptTestsPasses = 0
 
@@ -138,8 +138,8 @@ testEgalite(casesArriveeAttenduesJoueur2,obtenirCasesDArriveePourJoueur(2,5))
 testEgalite(casesArriveeAttenduesJoueur3,obtenirCasesDArriveePourJoueur(3,5))
 testEgalite(casesArriveeAttenduesJoueur4,obtenirCasesDArriveePourJoueur(4,5))
 
-lePlusCourtCheminJoueur1 = lePlusCourtCheminVersArrivee(positionJoureur1,casesArriveeAttenduesJoueur1,voisins,distancesInitialesJ1)
-lePlusCourtCheminJoueur2 = lePlusCourtCheminVersArrivee(positionJoureur2,casesArriveeAttenduesJoueur2,voisins,distancesInitialesJ2)
+lePlusCourtCheminJoueur1 = lePlusCourtChemin(positionJoureur1,voisins,casesArriveeAttenduesJoueur1,distancesInitialesJ1)
+lePlusCourtCheminJoueur2 = lePlusCourtChemin(positionJoureur2,voisins,casesArriveeAttenduesJoueur2,distancesInitialesJ2)
 testEgalite(lePlusCourtCheminAttenduJ1,lePlusCourtCheminJoueur1)
 testEgalite(lePlusCourtCheminAttenduJ2,lePlusCourtCheminJoueur2)
 
@@ -148,26 +148,15 @@ poserMurHorizontal(5,voisins)
 poserMurVertical(16,voisins)
 poserMurVertical(26,voisins)
 testEgalite(plateauApresPoseDeMurs,dessinerPlateau(voisins,positionJoureur1,positionJoureur2))
-
 distancesJoueur1ApresNouveauxMurs = calculerTableauDesDistances(voisins,positionJoureur1)
 distancesJoueur2ApresNouveauxMurs = calculerTableauDesDistances(voisins,positionJoureur2)
-lePlusCourtCheminJoueur1ApresMurs = lePlusCourtCheminVersArrivee(positionJoureur1,casesArriveeAttenduesJoueur1,voisins,distancesJoueur1ApresNouveauxMurs)
-lePlusCourtCheminJoueur2ApresMurs = lePlusCourtCheminVersArrivee(positionJoureur2,casesArriveeAttenduesJoueur2,voisins,distancesJoueur2ApresNouveauxMurs)
+
+lePlusCourtCheminJoueur1ApresMurs = lePlusCourtChemin(positionJoureur1,voisins,casesArriveeAttenduesJoueur1,distancesJoueur1ApresNouveauxMurs)
+lePlusCourtCheminJoueur2ApresMurs = lePlusCourtChemin(positionJoureur2,voisins,casesArriveeAttenduesJoueur2,distancesJoueur2ApresNouveauxMurs)
 testEgalite(lePlusCourtCheminAttenduJ1,lePlusCourtCheminJoueur1ApresMurs)
 testEgalite(lePlusCourtCheminAttenduJ2Apres3Murs,lePlusCourtCheminJoueur2ApresMurs)
+
 testEgalite(voisinsAttendusApres3NouveauxMurs,voisins)
 
 voisinsRegeneres = genererNouveauPlateauCarreAvecNombreDeCasesParLigne(5)
 testEgalite(plateauRegenereAttendu,dessinerPlateau(voisinsRegeneres,positionJoureur1,positionJoureur2))
-
-voisinsATester = [
-    [1,4],[0,2,5],[1,3,6],[2,7],        
-    [0,8],[1,6,9],[2,7,5],[3,6],        
-    [4,12],[5,10],[9],[15],        
-    [8,13],[12,14],[13],[11]
-]
-
-distancesATester = [3,2,1,2,4,1,0,1,5,2,3,-1,6,7,8,-1]
-
-testEgalite([6, 2, 1, 0, 4, 8, 12, 13, 14], lePlusCourtCheminRecurs(6,14,voisinsATester,distancesATester))
-testEgalite([6, 2, 1, 0, 4, 8, 12, 13, 14], lePlusCourtChemin(6,14,voisinsATester,distancesATester))

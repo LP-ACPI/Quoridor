@@ -31,8 +31,8 @@ distancesJoueurA = calculerTableauDesDistances(voisins,positionJoureurA)
 distancesJoueurB = calculerTableauDesDistances(voisins,positionJoureurB)
 print dessinerPlateau(voisins,positionJoureurA,positionJoureurB)
 
-print lePlusCourtCheminVersArrivee(positionJoureurA,casesArriveeJoueurA,voisins,distancesJoueurA)
-print lePlusCourtCheminVersArrivee(positionJoureurB,casesArriveeJoueurB,voisins,distancesJoueurB)
+print lePlusCourtChemin(positionJoureurA,voisins,casesArriveeJoueurA,distancesJoueurA)
+print lePlusCourtChemin(positionJoureurB,voisins,casesArriveeJoueurB,distancesJoueurB)
 
 newPlateau = genererNouveauPlateauCarreAvecNombreDeCasesParLigne(9)
 print dessinerPlateau(newPlateau,4,76)
@@ -40,16 +40,3 @@ print dessinerPlateau(newPlateau,4,76)
 poserMurVertical(7,newPlateau)
 poserMurVertical(76,newPlateau)
 print dessinerPlateau(newPlateau,4,76)
-
-voisinsATester = [
-    [1,4],[0,2,5],[1,3,6],[2,7],        
-    [0,8],[1,6,9],[2,7,5],[3,6],        
-    [4,12],[5,10],[9],[15],        
-    [8,13],[12,14],[13],[11]
-]
-
-distancesATester = [3,2,1,2,4,1,0,1,5,2,3,-1,6,7,8,-1]
-
-print dessinerPlateau(voisinsATester,6)
-print lePlusCourtCheminRecurs(6,12,voisinsATester,distancesATester)
-print lePlusCourtChemin(6,12,voisinsATester,distancesATester)

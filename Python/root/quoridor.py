@@ -1,6 +1,6 @@
 import math
 '''
-Quelques definitions vis-a-vis de ce projet:
+Quelques definitions vois-a-vis de ce projet:
 - Voisins :   pour chacune des cases du plateau du jeu, liste des cases accessibles depuis cette case (liste de listes)
 - Bordure :   liste des cases accessibles d'une case (nimporte laquelle -> utilise pour calculer les distances
 - Distances : pour chacune des cases (liste), distance a parcourrir (nombre de cases) pour atteindre cette case depuis la case d'origine
@@ -92,7 +92,7 @@ def poserMur(binomesCasesAutourDuMur,voisins):
     if not poseOk:
         print 'Pose du mur impossible'
 
-def dessinerPlateau(voisins,positionJ1 = -1,positionJ2 = -1,positionJ3 = -1,positionJ4 = -1):
+def dessinerPlateau(voisins,positionJ1,positionJ2 = -1,positionJ3 = -1,positionJ4 = -1):
     dessinPlateau = '\n '
     taillePlateau = len(voisins)
     longueurLigne = longueurLigneDuPlateauSiCarre(taillePlateau)
@@ -144,39 +144,19 @@ def dessinnerMurOuPassageVertical(position,case,lenLigne):
         return '-'
     else : return 'M'
 
-def lePlusCourtCheminRecurs(casePosition,caseAAtteindre,voisins,distances):
-    if(distances[caseAAtteindre] == -1):
-        return []
-    if(casePosition == caseAAtteindre):
-        chemin = []
-    else :
-        caseAAtteindreDansLePlusCourChemin = caseLaPlusProche(distances,voisins[caseAAtteindre])
-        chemin = lePlusCourtCheminRecurs(casePosition,caseAAtteindreDansLePlusCourChemin,voisins,distances)
-    chemin.append(caseAAtteindre)
-    return chemin
-
-def lePlusCourtChemin(positionActuelle,laCaseDArrivee,voisins,distances):
-    if(distances[laCaseDArrivee] == -1):
-        return []
+def lePlusCourtChemin(positionActuelle,voisins,casesArrivee,distances):
     chemin = []
-    chemin.append(laCaseDArrivee)
-    positionDuPlusCourtChemin = laCaseDArrivee
-    while(positionDuPlusCourtChemin != positionActuelle):
-        positionDuPlusCourtChemin = caseLaPlusProche(distances,voisins[positionDuPlusCourtChemin])
-        chemin.append(positionDuPlusCourtChemin)
+    positionChemin = indiceDistanceMinimaleVersDestination(distances,casesArrivee)
+    if(positionChemin != -1):
+        chemin.append(positionChemin)
+        while(positionChemin != positionActuelle):
+            positionChemin = indiceDistanceMinimaleVersDestination(distances,voisins[positionChemin])
+            chemin.append(positionChemin)
     return chemin[::-1]
 
-def lePlusCourtCheminVersArrivee(positionActuelle,casesArrivee,voisins,distances):
-    chemin = []
-    positionCheminCourt = caseLaPlusProche(distances,casesArrivee)
-    chemin.append(positionCheminCourt)
-    while(positionCheminCourt != positionActuelle):
-        positionCheminCourt = caseLaPlusProche(distances,voisins[positionCheminCourt])
-        chemin.append(positionCheminCourt)
-    return chemin[::-1]
-
-def caseLaPlusProche(distances,casesDestination):
-    minDist = float("inf")
+def indiceDistanceMinimaleVersDestination(distances,casesDestination):
+    minDist = 99
+    positionADistanceMin = -1
     for case in casesDestination:
         if(minDist > distances[case] and distances[case] != -1):
             positionADistanceMin = case
